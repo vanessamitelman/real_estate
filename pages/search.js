@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { baseUrl, fetchApi } from '../utils/fetchApi';
 import Image from 'next/image';
@@ -31,9 +31,16 @@ const Search = ({ properties }) => {
       </Flex>
       {searchFilters && <SearchFilters />}
       <Text fontSize='2xl' p='4' fontWeight='bold'>
-        Properties {router.query.purpose}
+        <h1>
+          Properties
+          {router.query.purpose === 'for-sale'
+            ? ' For Sale'
+            : router.query.purpose === 'for-rent'
+            ? ' For Rent'
+            : ''}
+        </h1>
       </Text>
-      <Flex flexWrap='wrap'>
+      <Flex flexWrap='wrap' justifyContent='center'>
         {properties.map((property) => (
           <Property key={property.id} property={property} />
         ))}
@@ -69,10 +76,11 @@ export async function getServerSideProps({ query }) {
   const areaMax = query.areaMax || '35000';
   const locationExternalIDs = query.locationExternalIDs || '5002';
   const categoryExternalID = query.categoryExternalID || '4';
-  const furnishingStatus = query.furnishingStatus || 'unfurnished'
+  const furnishingStatus = query.furnishingStatus || 'unfurnished';
 
-  const data = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=${locationExternalIDs}&purpose=${purpose}&categoryExternalID=${categoryExternalID}&bathsMin=${bathsMin}&rentFrequency=${rentFrequency}&priceMin=${minPrice}&priceMax=${maxPrice}&roomsMin=${roomsMin}&sort=${sort}&areaMax=${areaMax}&furnishingStatus=${furnishingStatus}`);
-
+  const data = await fetchApi(
+    `${baseUrl}/properties/list?locationExternalIDs=${locationExternalIDs}&purpose=${purpose}&categoryExternalID=${categoryExternalID}&bathsMin=${bathsMin}&rentFrequency=${rentFrequency}&priceMin=${minPrice}&priceMax=${maxPrice}&roomsMin=${roomsMin}&sort=${sort}&areaMax=${areaMax}&furnishingStatus=${furnishingStatus}`
+  );
 
   return {
     props: {

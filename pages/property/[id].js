@@ -4,8 +4,8 @@ import { BsGridFill } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
 import millify from 'millify';
 import { baseUrl, fetchApi } from '../../utils/fetchApi';
-import ImageScrollbar from '../../components/ImageScrollbar';
-
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const PropertyDetails = ({
   propertyDetails: {
@@ -26,9 +26,14 @@ const PropertyDetails = ({
     externalID
   }
 }) => {
+  const images=[];
+  photos.map((photo)=>{
+    images.push({"original":photo.url})
+  })
+  console.log(images)
   return (
     <Box maxWidth='1000px' margin='auto' p='4'>
-      {photos && <ImageScrollbar data={photos} />}
+      {photos &&  <ImageGallery items={images}/>}
       <Box w='full' p='6'>
         <Flex paddingTop='2' alignItems='center' justifyContent='space-between'>
           <Flex alignItems='center'>
@@ -100,7 +105,7 @@ const PropertyDetails = ({
           )}
         </Flex>
         <Box>
-          {amenities.length>0 && (
+          {amenities.length > 0 && (
             <>
               <Text fontSize='2xl' fontWeight='black' marginTop='5'>
                 Amenities
@@ -109,14 +114,17 @@ const PropertyDetails = ({
                 {amenities.map((item) =>
                   item?.amenities?.map((amenity, i) => (
                     <Text
-                    fontWeight='bold'
-                    color="blue.400"
-                    fontSize="l"
-                    p="2"
-                    bg="gray.200"
-                    m="1"
-                    borderRadius="5"
-                    key={i}>{amenity.text}</Text>
+                      fontWeight='bold'
+                      color='blue.400'
+                      fontSize='l'
+                      p='2'
+                      bg='gray.200'
+                      m='1'
+                      borderRadius='5'
+                      key={i}
+                    >
+                      {amenity.text}
+                    </Text>
                   ))
                 )}
               </Flex>
