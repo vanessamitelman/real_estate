@@ -22,15 +22,13 @@ const PropertyDetails = ({
     purpose,
     furnishingStatus,
     amenities,
-    photos,
-    externalID
+    photos
   }
 }) => {
   const images=[];
   photos.map((photo)=>{
     images.push({"original":photo.url})
   })
-  console.log(images)
   return (
     <Box maxWidth='1000px' margin='auto' p='4'>
       {photos &&  <ImageGallery items={images}/>}
