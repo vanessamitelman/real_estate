@@ -5,6 +5,7 @@ import Banner from '../components/Banner';
 
 
 export default function Home({ propertiesForSale, propertiesForRent }) {
+  const imgPrefix = 'https://bayut-production.s3.eu-central-1.amazonaws.com/image'
   return (
     <Box>
       <Banner
@@ -15,7 +16,7 @@ export default function Home({ propertiesForSale, propertiesForRent }) {
         desc2='and more'
         buttonText='Explore Renting'
         linkName='/search?purpose=for-rent'
-        imageUrl='https://bayut-production.s3.eu-central-1.amazonaws.com/image/145426814/33973352624c48628e41f2ec460faba4'
+        imageUrl={`${imgPrefix}/145426814/33973352624c48628e41f2ec460faba4`}
       />
       <Flex flexWrap='wrap' justifyContent="center">
         {propertiesForRent?.map((property) => (
@@ -30,7 +31,7 @@ export default function Home({ propertiesForSale, propertiesForRent }) {
         desc2='and more'
         buttonText='Explore Buying'
         linkName='/search?purpose=for-sale'
-        imageUrl='https://bayut-production.s3.eu-central-1.amazonaws.com/image/110993385/6a070e8e1bae4f7d8c1429bc303d2008'
+        imageUrl={`${imgPrefix}/110993385/6a070e8e1bae4f7d8c1429bc303d2008`}
       />
       <Flex flexWrap='wrap' justifyContent='center'>
         {propertiesForSale?.map((property) => (
@@ -42,11 +43,13 @@ export default function Home({ propertiesForSale, propertiesForRent }) {
 }
 
 export async function getStaticProps() {
+  const urlPrefix = '/properties/list?locationExternalIDs=5002&purpose='
+  const urlSuffix = '&hitsPerPage=6'
   const propertyForSale = await fetchApi(
-    `${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-sale&hitsPerPage=6`
+    `${baseUrl}${urlPrefix}for-sale${urlSuffix}`
   );
   const propertyForRent = await fetchApi(
-    `${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-rent&hitsPerPage=6`
+    `${baseUrl}${urlPrefix}for-rent${urlSuffix}`
   );
   return {
     props: {
