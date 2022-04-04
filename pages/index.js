@@ -1,11 +1,11 @@
-import { Flex, Box} from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import { baseUrl, fetchApi } from '../utils/fetchApi';
 import Property from '../components/Property';
 import Banner from '../components/Banner';
 
-
 export default function Home({ propertiesForSale, propertiesForRent }) {
-  const imgPrefix = 'https://bayut-production.s3.eu-central-1.amazonaws.com/image'
+  const imgPrefix =
+    'https://bayut-production.s3.eu-central-1.amazonaws.com/image';
   return (
     <Box>
       <Banner
@@ -18,7 +18,7 @@ export default function Home({ propertiesForSale, propertiesForRent }) {
         linkName='/search?purpose=for-rent'
         imageUrl={`${imgPrefix}/145426814/33973352624c48628e41f2ec460faba4`}
       />
-      <Flex flexWrap='wrap' justifyContent="center">
+      <Flex flexWrap='wrap' justifyContent='center'>
         {propertiesForRent?.map((property) => (
           <Property key={property.id} property={property} />
         ))}
@@ -43,8 +43,8 @@ export default function Home({ propertiesForSale, propertiesForRent }) {
 }
 
 export async function getStaticProps() {
-  const urlPrefix = '/properties/list?locationExternalIDs=5002&purpose='
-  const urlSuffix = '&hitsPerPage=6'
+  const urlPrefix = '/properties/list?locationExternalIDs=5002&purpose=';
+  const urlSuffix = '&hitsPerPage=6';
   const propertyForSale = await fetchApi(
     `${baseUrl}${urlPrefix}for-sale${urlSuffix}`
   );
